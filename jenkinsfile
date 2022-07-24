@@ -1,0 +1,38 @@
+pipeline {
+    agent any
+    options {
+        skipStagesAfterUnstable()
+    }
+    stages {
+         stage('Clone repository') { 
+            steps { 
+                script{
+                checkout scm
+                }
+            }
+        }
+
+        stage('Build') { 
+            steps { 
+                script{
+                 app = docker.build("docker:jenkins")
+                }
+            }
+        }
+        stage('Test'){
+            steps {
+                 echo 'Empty'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                script{
+                        docker.withRegistry('554278834118.dkr.ecr.us-east-1.amazonaws.com/jenkins-repository', 'ecr:us-east-1:aws-root-user') {
+                    app.push("${env.BUILD_NUMBER}")
+                    app.push("latest")
+                    }
+                }
+            }
+        }
+    }
+}
