@@ -35,3 +35,11 @@ pipeline {
         }
     }
 }
+stage('Pushing to ECR') {
+     steps{  
+         script {
+                sh "docker tag jenkins-repository:latest"
+                sh "docker push ${ECR_URL}"
+         }
+        }
+      }
