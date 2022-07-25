@@ -28,7 +28,8 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry("${ECR_URL}", "${ECR_CRED}") {
-                        image.push("${IMAGE_TAG}")
+                    app.push("${env.BUILD_NUMBER}")
+                    app.push("latest")
                     }
                 }
             }
