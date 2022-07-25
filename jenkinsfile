@@ -15,7 +15,7 @@ pipeline {
         stage('Build') { 
             steps { 
                 script{
-                 app = docker.build("docker:jenkins")
+                 app = docker.build("${IMAGE_REPO_NAME}:${IMAGE_TAG}")
                 }
             }
         }
