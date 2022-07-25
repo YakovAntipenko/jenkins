@@ -26,10 +26,9 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                script{
-                        docker.withRegistry('554278834118.dkr.ecr.us-east-1.amazonaws.com/jenkins-repository', 'ecr:us-east-1:aws-root-user') {
-                    app.push("${env.BUILD_NUMBER}")
-                    app.push("latest")
+                script {
+                    docker.withRegistry("${ECR_URL}", "${ECR_CRED}") {
+                        image.push("${IMAGE_TAG}")
                     }
                 }
             }
